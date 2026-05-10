@@ -1,0 +1,232 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .schedule { font-family: var(--font-sans); padding: 1.5rem 0; max-width: 680px; }
+  .header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .header-title { font-size: 22px; font-weight: 500; color: var(--color-text-primary); letter-spacing: -0.5px; }
+  .header-date { font-size: 13px; color: var(--color-text-secondary); margin-left: auto; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; color: var(--color-text-tertiary); text-transform: uppercase; margin: 1.2rem 0 0.5rem; }
+  .block { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-primary); margin-bottom: 6px; transition: background 0.15s; cursor: default; }
+  .block:hover { background: var(--color-background-secondary); }
+  .time-badge { font-size: 12px; font-weight: 500; color: var(--color-text-info); background: var(--color-background-info); padding: 3px 8px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .block-content { flex: 1; }
+  .block-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 2px; }
+  .block-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+  .cat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+  .dot-spirit { background: #7F77DD; }
+  .dot-body { background: #1D9E75; }
+  .dot-work { background: #378ADD; }
+  .dot-content { background: #D85A30; }
+  .dot-study { background: #BA7517; }
+  .dot-rest { background: #888780; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 1.2rem; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--color-text-secondary); }
+  .legend-dot { width: 7px; height: 7px; border-radius: 50%; }
+</style>
+
+<div class="schedule">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Rutina diaria de Alex Mike — BE AI</h2>
+
+  <div class="header">
+    <span style="font-size:20px;" aria-hidden="true"><i class="ti ti-calendar-week"></i></span>
+    <span class="header-title">Daily</span>
+    <span class="header-date">Rutina BE AI — Alex Mike</span>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#7F77DD"></div> Espiritual</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div> Cuerpo</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div> Negocio</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#D85A30"></div> Contenido</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#BA7517"></div> Estudio</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#888780"></div> Descanso</div>
+  </div>
+
+  <div class="section-label">Madrugada — Mañana</div>
+
+  <div class="block">
+    <div class="cat-dot dot-spirit"></div>
+    <div class="time-badge">5:00</div>
+    <div class="block-content">
+      <div class="block-title">Oración</div>
+      <div class="block-desc">Total presencia, sin pensamientos invasores. Conectar con Dios, agradecer y meditar su palabra.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-spirit"></div>
+    <div class="time-badge">5:30</div>
+    <div class="block-content">
+      <div class="block-title">Reprogramación</div>
+      <div class="block-desc">Mental con anclas y audios. Integrar sombras.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-body"></div>
+    <div class="time-badge">6:00</div>
+    <div class="block-content">
+      <div class="block-title">Deporte</div>
+      <div class="block-desc">Música buena y alerta — llegar al fallo.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-study"></div>
+    <div class="time-badge">7:00</div>
+    <div class="block-content">
+      <div class="block-title">Lectura</div>
+      <div class="block-desc">Total presencia, sin dormir, sin ruido.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-body"></div>
+    <div class="time-badge">7:30</div>
+    <div class="block-content">
+      <div class="block-title">Ducha de agua fría</div>
+      <div class="block-desc">Con motivación. Decretar programación — no negociable.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-body"></div>
+    <div class="time-badge">7:50</div>
+    <div class="block-content">
+      <div class="block-title">Batido + Café + Vitamina</div>
+      <div class="block-desc">Sano para arrancar — vitaminas, café para energía, música de Dios.</div>
+    </div>
+  </div>
+
+  <div class="section-label">Mañana — Trabajo profundo</div>
+
+  <div class="block">
+    <div class="cat-dot dot-work"></div>
+    <div class="time-badge">8:00</div>
+    <div class="block-content">
+      <div class="block-title">Deep Work — Paolandrea Lanzamiento</div>
+      <div class="block-desc">Análisis y bazar en total presencia al proyecto. Agua con creatina.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-work"></div>
+    <div class="time-badge">10:00</div>
+    <div class="block-content">
+      <div class="block-title">Formación con David — Shadow Operator</div>
+      <div class="block-desc">Sin ruido, total presencia con apuntes y café.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-work"></div>
+    <div class="time-badge">11:30</div>
+    <div class="block-content">
+      <div class="block-title">Prospección online — 10 leads mínimo</div>
+      <div class="block-desc">Instagram sin distraer foco. No usar iPhone para prospectar.</div>
+    </div>
+  </div>
+
+  <div class="section-label">Tarde</div>
+
+  <div class="block">
+    <div class="cat-dot dot-body"></div>
+    <div class="time-badge">13:00</div>
+    <div class="block-content">
+      <div class="block-title">Comida</div>
+      <div class="block-desc">Cocina sana.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-work"></div>
+    <div class="time-badge">13:50</div>
+    <div class="block-content">
+      <div class="block-title">Salir a calle a prospectar</div>
+      <div class="block-desc">Restaurantes, tiendas, clínicas B2B, etc. Llevar plan y prospectos en mente con propuestas.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-content"></div>
+    <div class="time-badge">16:00</div>
+    <div class="block-content">
+      <div class="block-title">Contenido Alex Mike</div>
+      <div class="block-desc">Grabar, editar y subir un reel mínimo + tres historias. Ser auténtico — no negociable.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-study"></div>
+    <div class="time-badge">17:00</div>
+    <div class="block-content">
+      <div class="block-title">IA Study</div>
+      <div class="block-desc">Para no perder foco en la tendencia.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-work"></div>
+    <div class="time-badge">18:00</div>
+    <div class="block-content">
+      <div class="block-title">KPIs y seguimiento</div>
+      <div class="block-desc">Medición, seguimiento, análisis y planificación de tareas del día siguiente.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-study"></div>
+    <div class="time-badge">18:30</div>
+    <div class="block-content">
+      <div class="block-title">Inglés con IA</div>
+      <div class="block-desc">Total presencia sin distracciones con la IA.</div>
+    </div>
+  </div>
+
+  <div class="section-label">Noche — Cierre</div>
+
+  <div class="block">
+    <div class="cat-dot dot-body"></div>
+    <div class="time-badge">19:00</div>
+    <div class="block-content">
+      <div class="block-title">Cena</div>
+      <div class="block-desc">Sanamente con agua abundante y escuchar podcast.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-spirit"></div>
+    <div class="time-badge">19:50</div>
+    <div class="block-content">
+      <div class="block-title">Misa</div>
+      <div class="block-desc">Entrega total sin pensamientos invasores.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-rest"></div>
+    <div class="time-badge">21:00</div>
+    <div class="block-content">
+      <div class="block-title">Daily Review</div>
+      <div class="block-desc">Desconectar pantallas. Escribir en diario de Ameche. Planificar metas del día siguiente. Ajustar enfoque, paz mental y decisiones.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-spirit"></div>
+    <div class="time-badge">21:30</div>
+    <div class="block-content">
+      <div class="block-title">Agradecimiento</div>
+      <div class="block-desc">Oración de entrega y meditación con Dios, la Virgen, san Miguel y el ángel de la guarda.</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="cat-dot dot-rest"></div>
+    <div class="time-badge">22:00</div>
+    <div class="block-content">
+      <div class="block-title">Dormir</div>
+      <div class="block-desc">Entrega total — sin falta. Ya cepillado y tomado agua.</div>
+    </div>
+  </div>
+</div>

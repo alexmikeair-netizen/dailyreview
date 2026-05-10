@@ -1,0 +1,440 @@
+
+<style>
+  .week-header { border-left: 3px solid #C9A84C; padding: 0.5rem 1rem; margin-bottom: 1.5rem; }
+  .week-title { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 2px; }
+  .week-sub { font-size: 13px; color: var(--color-text-secondary); margin: 0; }
+  .day-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); margin-bottom: 1rem; overflow: hidden; }
+  .day-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); cursor: pointer; user-select: none; }
+  .day-name { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .day-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
+  .badge-gold { background: #f5e9cc; color: #7a5a00; }
+  .badge-red { background: #fce8e8; color: #8b1a1a; }
+  .badge-green { background: #e4f5ec; color: #0f5c2e; }
+  .badge-blue { background: #e3eefb; color: #0c3d7a; }
+  .badge-purple { background: #ede7f6; color: #4a2880; }
+  .badge-orange { background: #fdf0e0; color: #7a3e00; }
+  .badge-new { background: #d4edda; color: #1a5c2a; border: 1px solid #a0d5b0; }
+  .day-body { padding: 12px 16px; }
+  .seccion { margin-bottom: 14px; }
+  .seccion-title { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .metas-section { margin-bottom: 12px; }
+  .section-label { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .meta-item { display: flex; align-items: flex-start; gap: 8px; padding: 5px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 13px; color: var(--color-text-primary); }
+  .meta-item:last-child { border-bottom: none; }
+  .meta-num { width: 18px; height: 18px; border-radius: 50%; background: #C9A84C; color: #fff; font-size: 10px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .blocks-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .block-item { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 8px 10px; border-left: 2px solid var(--color-border-tertiary); }
+  .block-item.inmutable { border-left-width: 3px; }
+  .block-item.nuevo { border-left-width: 3px; border-left-color: #1a7a4a; background: #f0faf4; }
+  .block-time { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 2px; }
+  .block-title { font-size: 12px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 2px; display: flex; align-items: center; gap: 4px; }
+  .block-desc { font-size: 11px; color: var(--color-text-secondary); line-height: 1.4; }
+  .tag-inmutable { font-size: 9px; background: #fce8e8; color: #8b1a1a; padding: 1px 5px; border-radius: 8px; font-weight: 500; }
+  .tag-nuevo { font-size: 9px; background: #d4edda; color: #1a5c2a; padding: 1px 5px; border-radius: 8px; font-weight: 500; }
+  .chevron { font-size: 12px; color: var(--color-text-secondary); transition: transform 0.2s; }
+  .day-card.open .chevron { transform: rotate(180deg); }
+  .day-card:not(.open) .day-body { display: none; }
+  .nota-box { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 14px; margin-top: 10px; font-size: 12px; color: var(--color-text-secondary); border-left: 2px solid #C9A84C; }
+  .special-box { border-radius: var(--border-radius-md); padding: 10px 14px; margin-bottom: 12px; font-size: 12px; }
+  .done-box { background: #f0faf4; border: 0.5px solid #a0d5b0; color: #0f5c2e; }
+  .viernes-special { background: #e8f5ee; border: 0.5px solid #a0d5b8; color: #0f5c2e; }
+</style>
+
+<div style="padding: 1rem 0;">
+  <div class="week-header">
+    <p class="week-title">Semana operativa — Alex Mike & BE AI</p>
+    <p class="week-sub">Lunes 13 – Viernes 18 de abril · Modo Monje Completo · Fase 2: El Estratega</p>
+  </div>
+
+  <!-- LUNES -->
+  <div class="day-card" id="day-lun">
+    <div class="day-header" onclick="toggle('day-lun')">
+      <div><span class="day-name">Lunes 13</span></div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="day-badges"><span class="badge badge-green">Completado ✓</span></div>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="special-box done-box">Cartilla militar ✓ · Tianguis / despensa ✓ · Tareas del martes original ✓</div>
+    </div>
+  </div>
+
+  <!-- MARTES -->
+  <div class="day-card" id="day-mar">
+    <div class="day-header" onclick="toggle('day-mar')">
+      <div><span class="day-name">Martes 15</span></div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="day-badges"><span class="badge badge-green">Parcial ✓</span></div>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="special-box done-box">Grabación Reels ✓ · Inmutables ✓ · PNL Mauricio ✓ · Pendiente: edición + subida a redes → pasa al miércoles · YouTube → pendiente</div>
+    </div>
+  </div>
+
+  <!-- MIERCOLES -->
+  <div class="day-card open" id="day-mie">
+    <div class="day-header" onclick="toggle('day-mie')">
+      <div><span class="day-name">Miércoles 16</span><span style="font-size:12px;color:var(--color-text-secondary);margin-left:8px;">GHL · Prospección · Edición Reels · PNL</span></div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="day-badges"><span class="badge badge-gold">GHL</span><span class="badge badge-red">Ventas</span><span class="badge badge-new">+ Edición</span></div>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="metas-section">
+        <div class="section-label">3 metas del día</div>
+        <div class="meta-item"><div class="meta-num">1</div><span>Editar Reels y subirlos programados a redes sociales</span></div>
+        <div class="meta-item"><div class="meta-num">2</div><span>Configurar snapshots en GHL + enviar 20 DMs + agendar 2 llamadas para el jueves</span></div>
+        <div class="meta-item"><div class="meta-num">3</div><span>Clase PNL Mauricio Benoist</span></div>
+      </div>
+
+      <div class="seccion">
+        <div class="seccion-title">Mañana — Preparación y poder</div>
+        <div class="blocks-grid">
+          <div class="block-item inmutable" style="border-left-color:#6B3FA0">
+            <div class="block-time">05:00 – 05:30</div>
+            <div class="block-title">Despertar + espiritualidad <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Sin teléfono · oración · escrituras · mantra · visualización · 3 metas</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#1a7a4a">
+            <div class="block-time">05:30 – 07:00</div>
+            <div class="block-title">Activación + entrenamiento <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Luz solar · respiraciones · pesas · ducha fría</div>
+          </div>
+          <div class="block-item" style="border-left-color:#2c7bb6">
+            <div class="block-time">07:00 – 07:20</div>
+            <div class="block-title">Nutrición — Desayuno</div>
+            <div class="block-desc">Alto en proteína. Revisar 3 metas del día</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#1a5fa8">
+            <div class="block-time">07:20 – 07:50</div>
+            <div class="block-title">Lectura <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">30 min libro físico. Sin teléfono, sin música</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#1a5fa8">
+            <div class="block-time">07:50 – 09:30</div>
+            <div class="block-title">Deep Work #1 — GHL <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Configurar snapshots y pipeline completo</div>
+          </div>
+          <div class="block-item nuevo">
+            <div class="block-time">09:30 – 10:30</div>
+            <div class="block-title">Edición y subida de Reels <span class="tag-nuevo">nuevo</span></div>
+            <div class="block-desc">Editar todos los Reels grabados el martes. Programar subida a Instagram y TikTok. Verificar CTAs</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#888">
+            <div class="block-time">10:30 – 12:00</div>
+            <div class="block-title">Deep Work #2 — Curso Ventas Yaguna (1 hr) <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Bloque 1 de 2. Aplicar técnica en DMs de hoy</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="seccion">
+        <div class="seccion-title">Tarde — Ejecución BE AI</div>
+        <div class="blocks-grid">
+          <div class="block-item inmutable" style="border-left-color:#C9A84C">
+            <div class="block-time">12:00 – 14:00</div>
+            <div class="block-title">Bloque BE AI — Prospección <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">20 DMs. Responder a quien contestó. Profundizar dolor</div>
+          </div>
+          <div class="block-item" style="border-left-color:#2c7bb6">
+            <div class="block-time">14:00 – 14:30</div>
+            <div class="block-title">Comida — Almuerzo</div>
+            <div class="block-desc">Ventana principal. Sin pantallas</div>
+          </div>
+          <div class="block-item" style="border-left-color:#e91e8c">
+            <div class="block-time">14:30 – 16:30</div>
+            <div class="block-title">Clase PNL — Mauricio Benoist</div>
+            <div class="block-desc">2 hrs. Rapport y lenguaje de ventas para el jueves</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#C9A84C">
+            <div class="block-time">17:30 – 19:00</div>
+            <div class="block-title">Bloque BE AI — Agendar llamadas <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">"¿Tienes 20 min mañana?" Mínimo 2 llamadas agendadas para el jueves</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="seccion">
+        <div class="seccion-title">Noche — Cierre y recuperación</div>
+        <div class="blocks-grid">
+          <div class="block-item" style="border-left-color:#2c7bb6">
+            <div class="block-time">19:00 – 19:30</div>
+            <div class="block-title">Cena</div>
+            <div class="block-desc">Cena ligera. Sin pantallas</div>
+          </div>
+          <div class="block-item" style="border-left-color:#1a7a4a">
+            <div class="block-time">19:30 – 20:00</div>
+            <div class="block-title">Cierre del día + repaso</div>
+            <div class="block-desc">Revisar KPIs. Planear 3 tareas del día siguiente</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#6B3FA0">
+            <div class="block-time">20:00 – 21:00</div>
+            <div class="block-title">Misa + cierre espiritual <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Reflexión. Diario de gratitud: 3 cosas. Oración final</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#888">
+            <div class="block-time">22:00 – 05:00</div>
+            <div class="block-title">Sueño — 7 horas <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Cero teléfono. Modo avión. Recarga neurológica</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JUEVES -->
+  <div class="day-card" id="day-jue">
+    <div class="day-header" onclick="toggle('day-jue')">
+      <div><span class="day-name">Jueves 17</span><span style="font-size:12px;color:var(--color-text-secondary);margin-left:8px;">Llamadas diagnóstico · MVP · Cursos · + Marca Víctor Heras</span></div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="day-badges"><span class="badge badge-red">Cierre</span><span class="badge badge-purple">MVP</span><span class="badge badge-new">+ Marca</span></div>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="metas-section">
+        <div class="section-label">3 metas del día</div>
+        <div class="meta-item"><div class="meta-num">1</div><span>Realizar mínimo 2 llamadas de diagnóstico — documentar dolores, deseos y sueños reales</span></div>
+        <div class="meta-item"><div class="meta-num">2</div><span>Completar curso Claude (2 hrs) + bloque 2 curso Marca Víctor Heras</span></div>
+        <div class="meta-item"><div class="meta-num">3</div><span>Con los datos de llamadas: definir el dolor más urgente y esbozar el MVP</span></div>
+      </div>
+
+      <div class="seccion">
+        <div class="seccion-title">Mañana — Preparación y poder</div>
+        <div class="blocks-grid">
+          <div class="block-item inmutable" style="border-left-color:#6B3FA0">
+            <div class="block-time">05:00 – 05:30</div>
+            <div class="block-title">Despertar + espiritualidad <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Sin teléfono · oración · escrituras · mantra · visualización · 3 metas · anclar estado antes de llamadas</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#1a7a4a">
+            <div class="block-time">05:30 – 07:00</div>
+            <div class="block-title">Activación + entrenamiento <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Cardio. Ducha fría. Cuerpo activado para llamadas</div>
+          </div>
+          <div class="block-item" style="border-left-color:#2c7bb6">
+            <div class="block-time">07:00 – 07:20</div>
+            <div class="block-title">Nutrición — Desayuno</div>
+            <div class="block-desc">Alto en proteína. Repasar las 5 preguntas de diagnóstico</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#1a5fa8">
+            <div class="block-time">07:20 – 07:50</div>
+            <div class="block-title">Lectura <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">30 min libro físico. Sin teléfono, sin música</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#888">
+            <div class="block-time">07:50 – 09:50</div>
+            <div class="block-title">Deep Work #1 — Curso Claude (2 hrs) <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Completar las 3 hrs del curso. Integrar al flujo BE AI</div>
+          </div>
+          <div class="block-item nuevo">
+            <div class="block-time">09:50 – 10:50</div>
+            <div class="block-title">Curso Marca — Víctor Heras (1 hr) <span class="tag-nuevo">nuevo</span></div>
+            <div class="block-desc">Bloque 2 de 3 — postergado desde el miércoles. Implementar 1 ajuste al perfil hoy mismo</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#C0392B">
+            <div class="block-time">10:50 – 12:30</div>
+            <div class="block-title">Llamadas de diagnóstico <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">2–3 llamadas de 20 min. 5 preguntas: negocio, reto, intentos, urgencia, costo del problema</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="seccion">
+        <div class="seccion-title">Tarde — Análisis y prospección</div>
+        <div class="blocks-grid">
+          <div class="block-item" style="border-left-color:#2c7bb6">
+            <div class="block-time">12:30 – 13:00</div>
+            <div class="block-title">Comida — Almuerzo</div>
+            <div class="block-desc">Ventana principal. Sin pantallas</div>
+          </div>
+          <div class="block-item" style="border-left-color:#1a5fa8">
+            <div class="block-time">13:00 – 14:30</div>
+            <div class="block-title">Análisis MVP</div>
+            <div class="block-desc">¿Cuál es el dolor más repetido? Ese es el MVP. Documentarlo para semana 20–26</div>
+          </div>
+          <div class="block-item" style="border-left-color:#e91e8c">
+            <div class="block-time">14:30 – 16:30</div>
+            <div class="block-title">Clase PNL — Mauricio Benoist</div>
+            <div class="block-desc">2 hrs. Integrar rapport y lenguaje de cierre para el viernes</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#C9A84C">
+            <div class="block-time">16:30 – 18:30</div>
+            <div class="block-title">Bloque BE AI — Prospección <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">20 DMs. Actualizar pipeline en GHL. Preparar propuesta para el viernes</div>
+          </div>
+          <div class="block-item" style="border-left-color:#888">
+            <div class="block-time">18:30 – 19:00</div>
+            <div class="block-title">Curso Ventas Yaguna (1 hr final)</div>
+            <div class="block-desc">Completar las 2 hrs. Aplicar técnica de cierre mañana</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="seccion">
+        <div class="seccion-title">Noche — Cierre y recuperación</div>
+        <div class="blocks-grid">
+          <div class="block-item" style="border-left-color:#2c7bb6">
+            <div class="block-time">19:00 – 19:30</div>
+            <div class="block-title">Cena</div>
+            <div class="block-desc">Cena ligera. Sin pantallas</div>
+          </div>
+          <div class="block-item" style="border-left-color:#1a7a4a">
+            <div class="block-time">19:30 – 20:00</div>
+            <div class="block-title">Cierre del día + repaso</div>
+            <div class="block-desc">Revisar KPIs. Planear 3 tareas del viernes</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#6B3FA0">
+            <div class="block-time">20:00 – 21:00</div>
+            <div class="block-title">Misa + cierre espiritual <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Reflexión. Diario de gratitud: 3 cosas. Oración final</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#888">
+            <div class="block-time">22:00 – 05:00</div>
+            <div class="block-title">Sueño — 7 horas <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Cero teléfono. Modo avión. Recarga neurológica</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIERNES -->
+  <div class="day-card" id="day-vie">
+    <div class="day-header" onclick="toggle('day-vie')">
+      <div><span class="day-name">Viernes 18</span><span style="font-size:12px;color:var(--color-text-secondary);margin-left:8px;">Tianguis · Cierre · WhatsApp · KPIs + plan finde</span></div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="day-badges"><span class="badge badge-green">Tianguis</span><span class="badge badge-red">Cierre</span><span class="badge badge-gold">KPIs</span></div>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="metas-section">
+        <div class="section-label">3 metas del día</div>
+        <div class="meta-item"><div class="meta-num">1</div><span>Cerrar 1 cliente o dejar propuesta formal enviada con seguimiento pactado</span></div>
+        <div class="meta-item"><div class="meta-num">2</div><span>Lanzar grupo WhatsApp con lead magnet activo + completar curso Marca Víctor Heras (bloque final)</span></div>
+        <div class="meta-item"><div class="meta-num">3</div><span>Noche: revisar KPIs de la semana completa y planear sábado y domingo</span></div>
+      </div>
+
+      <div class="seccion">
+        <div class="seccion-title">Mañana — Preparación y poder</div>
+        <div class="blocks-grid">
+          <div class="block-item inmutable" style="border-left-color:#6B3FA0">
+            <div class="block-time">05:00 – 05:30</div>
+            <div class="block-title">Despertar + espiritualidad <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Visualización: "Hoy firmo." Escribir nombre del prospecto. Anclar estado de cierre</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#1a7a4a">
+            <div class="block-time">05:30 – 07:00</div>
+            <div class="block-title">Activación + entrenamiento <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Pesas o calistenia. Ducha fría</div>
+          </div>
+          <div class="block-item" style="border-left-color:#2c7bb6">
+            <div class="block-time">07:00 – 07:20</div>
+            <div class="block-title">Nutrición — Desayuno</div>
+            <div class="block-desc">Alto en proteína. Revisar prospectos calientes</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#1a5fa8">
+            <div class="block-time">07:20 – 07:50</div>
+            <div class="block-title">Lectura <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">30 min libro físico. Sin teléfono, sin música</div>
+          </div>
+          <div class="block-item" style="border-left-color:#1a7a4a">
+            <div class="block-time">07:50 – 09:00</div>
+            <div class="block-title">Tianguis — Despensa semana siguiente</div>
+            <div class="block-desc">Compra semanal. Precios accesibles. Regresar antes de las 9:00</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#C0392B">
+            <div class="block-time">09:00 – 10:00</div>
+            <div class="block-title">Llamadas de cierre <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Si hay fit: propuesta directa. Si no: honestidad total</div>
+          </div>
+          <div class="block-item" style="border-left-color:#888">
+            <div class="block-time">10:00 – 11:00</div>
+            <div class="block-title">Curso Marca — Víctor Heras (bloque final)</div>
+            <div class="block-desc">Última hora. Implementar 1 ajuste a perfil o bio. Cursos completados</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="seccion">
+        <div class="seccion-title">Tarde — Ejecución y sistemas</div>
+        <div class="blocks-grid">
+          <div class="block-item inmutable" style="border-left-color:#1a7a4a">
+            <div class="block-time">11:00 – 13:00</div>
+            <div class="block-title">Lanzamiento grupo WhatsApp <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Lead magnet activo. Stories con CTA. Link en bio. Primer mensaje de valor</div>
+          </div>
+          <div class="block-item" style="border-left-color:#2c7bb6">
+            <div class="block-time">13:00 – 13:30</div>
+            <div class="block-title">Comida — Almuerzo</div>
+            <div class="block-desc">Ventana principal. Sin pantallas</div>
+          </div>
+          <div class="block-item" style="border-left-color:#e91e8c">
+            <div class="block-time">13:30 – 15:30</div>
+            <div class="block-title">Clase PNL — Mauricio Benoist</div>
+            <div class="block-desc">2 hrs. Última sesión de la semana. Integrar y celebrar</div>
+          </div>
+          <div class="block-item" style="border-left-color:#1a5fa8">
+            <div class="block-time">15:30 – 17:00</div>
+            <div class="block-title">Análisis ángulos de contenido</div>
+            <div class="block-desc">¿Qué Reel tuvo más alcance? ¿Qué dolor resonó? Datos para semana siguiente</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#C9A84C">
+            <div class="block-time">17:00 – 19:00</div>
+            <div class="block-title">Bloque BE AI — Prospección cierre <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">20 DMs finales. Seguimiento en GHL. Propuesta formal a prospectos calientes</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="seccion">
+        <div class="seccion-title">Noche — Cierre, KPIs y plan finde</div>
+        <div class="blocks-grid">
+          <div class="block-item" style="border-left-color:#2c7bb6">
+            <div class="block-time">19:00 – 19:30</div>
+            <div class="block-title">Cena</div>
+            <div class="block-desc">Cena ligera. Sin pantallas</div>
+          </div>
+          <div class="block-item" style="border-left-color:#1a7a4a">
+            <div class="block-time">19:30 – 20:00</div>
+            <div class="block-title">Cierre del día + repaso</div>
+            <div class="block-desc">Revisar KPIs diarios. Lectura opcional si faltó en la mañana</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#6B3FA0">
+            <div class="block-time">20:00 – 21:00</div>
+            <div class="block-title">Misa + cierre espiritual <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Reflexión semanal. Diario de gratitud. Oración final</div>
+          </div>
+          <div class="block-item" style="border-left-color:#C9A84C">
+            <div class="block-time">21:00 – 22:30</div>
+            <div class="block-title">Revisión KPIs + plan sábado y domingo</div>
+            <div class="block-desc">DMs, respuestas, llamadas, leads, seguidores, ventas. Con esos datos: planear el finde</div>
+          </div>
+          <div class="block-item inmutable" style="border-left-color:#888">
+            <div class="block-time">22:30 – 05:00</div>
+            <div class="block-title">Sueño <span class="tag-inmutable">inmutable</span></div>
+            <div class="block-desc">Cero teléfono. Modo avión. Recarga neurológica</div>
+          </div>
+        </div>
+      </div>
+      <div class="special-box viernes-special">El viernes en la noche, con datos reales, se planea el sábado y el domingo.</div>
+    </div>
+  </div>
+
+  <div class="nota-box" style="margin-top:1rem;">
+    Regla de oro: 3 metas cumplidas = día ganado. Todo lo demás es ruido. Avísame esta noche cómo fue el miércoles.
+  </div>
+</div>
+
+<script>
+function toggle(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+</script>

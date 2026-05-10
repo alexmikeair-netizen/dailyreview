@@ -1,0 +1,279 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.wrap{padding:1rem 0}
+.tabs{display:flex;gap:4px;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab{font-size:12px;padding:5px 12px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;color:var(--color-text-secondary);font-family:var(--font-sans)}
+.tab.active{background:#1D9E75;border-color:#1D9E75;color:#E1F5EE}
+.section{display:none}
+.section.active{display:block}
+.cat-label{font-size:11px;font-weight:500;letter-spacing:0.07em;color:var(--color-text-tertiary);text-transform:uppercase;margin:1.2rem 0 0.5rem}
+.habit-row{display:flex;align-items:flex-start;gap:8px;padding:9px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);margin-bottom:5px;cursor:pointer;transition:background 0.1s}
+.habit-row:hover{background:var(--color-background-secondary)}
+.habit-row.done{background:#E1F5EE;border-color:#5DCAA5}
+.habit-row.done .check-box{background:#1D9E75;border-color:#1D9E75;color:#E1F5EE}
+.check-box{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:11px;color:transparent}
+.habit-text{font-size:13px;color:var(--color-text-primary);font-weight:500}
+.habit-sub{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.habit-row.done .habit-text{color:#085041}
+.habit-row.done .habit-sub{color:#0F6E56}
+.meal-card{border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);padding:10px 14px;margin-bottom:8px}
+.meal-time{font-size:12px;color:var(--color-text-info);font-weight:500;margin-bottom:4px}
+.meal-name{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.meal-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.macro-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.macro{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:4px 8px;font-size:11px;color:var(--color-text-secondary)}
+.macro span{font-weight:500;color:var(--color-text-primary)}
+.sport-day{border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);padding:10px 14px;margin-bottom:8px}
+.sport-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.sport-tag{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500}
+.tag-fuerza{background:#E6F1FB;color:#0C447C}
+.tag-cardio{background:#E1F5EE;color:#085041}
+.tag-descanso{background:#F1EFE8;color:#444441}
+.sport-name{font-size:14px;font-weight:500;color:var(--color-text-primary)}
+.sport-list{font-size:12px;color:var(--color-text-secondary);line-height:1.8}
+.supp-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);margin-bottom:5px}
+.supp-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.supp-name{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.supp-timing{font-size:12px;color:var(--color-text-secondary)}
+.shop-cat{margin-bottom:1rem}
+.shop-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);margin-bottom:4px;cursor:pointer}
+.shop-item:hover{background:var(--color-background-secondary)}
+.shop-item.got{background:#E1F5EE;border-color:#5DCAA5}
+.shop-item.got .check-box{background:#1D9E75;border-color:#1D9E75;color:#E1F5EE}
+.shop-item.got .shop-name{color:#085041}
+.shop-name{font-size:13px;color:var(--color-text-primary)}
+.shop-qty{font-size:12px;color:var(--color-text-secondary);margin-left:auto}
+.shop-where{font-size:11px;padding:1px 6px;border-radius:10px;background:#FAEEDA;color:#633806;margin-left:4px}
+.shop-where.walmart{background:#E6F1FB;color:#0C447C}
+.progress-bar-wrap{margin-bottom:1rem}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--color-text-secondary);margin-bottom:5px}
+.progress-bar{height:6px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:#1D9E75;border-radius:3px;transition:width 0.3s}
+</style>
+
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden">Tracker semanal de hábitos, nutrición, deporte y despensa — Alex Mike</h2>
+
+<div class="wrap">
+  <div id="prog-wrap" class="progress-bar-wrap">
+    <div class="progress-label"><span>Hábitos completados hoy</span><span id="prog-text">0 / 0</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('habitos')"><i class="ti ti-check" style="font-size:12px;margin-right:3px" aria-hidden="true"></i>Hábitos</button>
+    <button class="tab" onclick="switchTab('nutricion')"><i class="ti ti-salad" style="font-size:12px;margin-right:3px" aria-hidden="true"></i>Nutrición</button>
+    <button class="tab" onclick="switchTab('deporte')"><i class="ti ti-barbell" style="font-size:12px;margin-right:3px" aria-hidden="true"></i>Deporte</button>
+    <button class="tab" onclick="switchTab('suplementos')"><i class="ti ti-pill" style="font-size:12px;margin-right:3px" aria-hidden="true"></i>Suplementos</button>
+    <button class="tab" onclick="switchTab('despensa')"><i class="ti ti-shopping-cart" style="font-size:12px;margin-right:3px" aria-hidden="true"></i>Despensa viernes</button>
+  </div>
+
+  <div id="habitos" class="section active">
+    <div class="cat-label"><i class="ti ti-moon" style="font-size:12px" aria-hidden="true"></i> Meditación y espíritu</div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">Oración — 5:00 am</div><div class="habit-sub">Total presencia, conectar con Dios, agradecer y meditar su palabra</div></div></div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">Reprogramación — 5:30 am</div><div class="habit-sub">Anclas, audios e integración de sombras</div></div></div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">Misa — 19:50</div><div class="habit-sub">Entrega total, sin pensamientos invasores</div></div></div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">Agradecimiento nocturno — 21:30</div><div class="habit-sub">Oración con Dios, la Virgen, san Miguel y el ángel de la guarda</div></div></div>
+
+    <div class="cat-label"><i class="ti ti-run" style="font-size:12px" aria-hidden="true"></i> Deporte y cuerpo</div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">Entrenamiento — 6:00 am</div><div class="habit-sub">Música buena, alerta total — llegar al fallo</div></div></div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">Ducha de agua fría — 7:30 am</div><div class="habit-sub">Con motivación y decreto — no negociable</div></div></div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">2+ litros de agua durante el día</div><div class="habit-sub">Hidratación constante — agua con creatina en comidas</div></div></div>
+
+    <div class="cat-label"><i class="ti ti-apple" style="font-size:12px" aria-hidden="true"></i> Nutrición</div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">Batido matutino — 7:50 am</div><div class="habit-sub">Plátano + avena + whey/cacao + agua + creatina 5g</div></div></div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">Comida — 13:00</div><div class="habit-sub">Proteína + verdura + carbohidrato sano + creatina 5g</div></div></div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">Cena — 19:00</div><div class="habit-sub">Sana, con agua abundante, escuchar podcast — máx 3h antes dormir</div></div></div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">Suplementos matutinos</div><div class="habit-sub">Vitamina Veroca + Omega 3 + creatina en batido</div></div></div>
+
+    <div class="cat-label"><i class="ti ti-book" style="font-size:12px" aria-hidden="true"></i> Lectura y estudio</div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">Lectura — 7:00 am</div><div class="habit-sub">Total presencia, sin ruido, sin dormir — mínimo 20 min</div></div></div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">IA Study — 17:00</div><div class="habit-sub">Para no perder foco en la tendencia</div></div></div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">Inglés con IA — 18:30</div><div class="habit-sub">Total presencia sin distracciones</div></div></div>
+
+    <div class="cat-label"><i class="ti ti-moon-stars" style="font-size:12px" aria-hidden="true"></i> Descanso</div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">Daily Review — 21:00</div><div class="habit-sub">Desconectar pantallas, diario, planificar día siguiente</div></div></div>
+    <div class="habit-row" onclick="toggle(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><div><div class="habit-text">Dormir — 22:00 (8h mínimo)</div><div class="habit-sub">Cepillado + agua tomada — apagado total</div></div></div>
+  </div>
+
+  <div id="nutricion" class="section">
+    <div class="cat-label">Batido fijo — post-entreno 7:50 am</div>
+    <div class="meal-card">
+      <div class="meal-time"><i class="ti ti-clock" style="font-size:12px;margin-right:3px" aria-hidden="true"></i>7:50 am — siempre igual</div>
+      <div class="meal-name">Batido de plátano, avena y proteína</div>
+      <div class="meal-desc">1 plátano maduro · 4–5 cdas avena entera · 1 cda cacao puro sin azúcar (o whey si tienes) · 200 ml agua fría · 5g creatina disueltos · 1 cucharada de café en la mañana aparte</div>
+      <div class="macro-row">
+        <div class="macro">Proteína <span>~30–45g</span></div>
+        <div class="macro">Carbos <span>~42g</span></div>
+        <div class="macro">Kcal <span>~350–390</span></div>
+        <div class="macro">Creatina <span>5g</span></div>
+      </div>
+    </div>
+
+    <div class="cat-label">Comida — 13:00</div>
+    <div class="meal-card">
+      <div class="meal-time"><i class="ti ti-clock" style="font-size:12px;margin-right:3px" aria-hidden="true"></i>13:00 — proteína + verdura + carb</div>
+      <div class="meal-name">Pechuga / muslo de pollo o filete de pescado</div>
+      <div class="meal-desc">150–200g proteína a la plancha con ajo y sal de mar · arroz integral o frijoles de olla · ensalada de espinacas o berros con AOVE y limón · tortilla de maíz artesanal (máx 2) · aguacate al gusto</div>
+      <div class="macro-row">
+        <div class="macro">Proteína <span>~35–45g</span></div>
+        <div class="macro">Verdura <span>siempre</span></div>
+        <div class="macro">Creatina <span>5g en agua</span></div>
+      </div>
+    </div>
+    <div class="meal-card" style="margin-top:0">
+      <div class="meal-time" style="color:var(--color-text-secondary)">Variantes semana</div>
+      <div class="meal-desc" style="line-height:2">
+        Lu: pollo + arroz integral + espinacas<br>
+        Ma: filete de pescado blanco + ensalada berros + tortilla<br>
+        Mi: atún en agua + frijoles + aguacate<br>
+        Ju: huevo (3–4) + nopales + salsa roja<br>
+        Vi: pollo muslo + arroz + ensalada verde<br>
+        Sa: atún / filete + verduras al comal
+      </div>
+    </div>
+
+    <div class="cat-label">Cena — 19:00</div>
+    <div class="meal-card">
+      <div class="meal-time"><i class="ti ti-clock" style="font-size:12px;margin-right:3px" aria-hidden="true"></i>19:00 — ligera, máx 3h antes de dormir</div>
+      <div class="meal-name">Cena sana con agua abundante</div>
+      <div class="meal-desc">Huevo revuelto / ensalada de jícama + pepino + limón / verduras al comal / sopa de verduras · Agua 500ml mínimo · Escuchar podcast mientras comes · Sin pantallas post-cena</div>
+      <div class="macro-row">
+        <div class="macro">Ligera <span>~200–300 kcal</span></div>
+        <div class="macro">Sin carbos <span>pesados</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="deporte" class="section">
+    <div class="cat-label">Rutina semanal — 6:00 am</div>
+    <div class="sport-day">
+      <div class="sport-header"><span class="sport-tag tag-fuerza">Fuerza</span><span class="sport-name">Lunes — Pecho y tríceps</span></div>
+      <div class="sport-list">Press banca o flexiones · Press inclinado · Fondos de tríceps · Fondos en paralelas · Elevaciones laterales · Llegar al fallo en cada serie</div>
+    </div>
+    <div class="sport-day">
+      <div class="sport-header"><span class="sport-tag tag-fuerza">Fuerza</span><span class="sport-name">Martes — Espalda y bíceps</span></div>
+      <div class="sport-list">Dominadas (todas las que puedas) · Remo con mancuerna · Jalones · Curl de bíceps · Peso muerto ligero · Foco en contracción</div>
+    </div>
+    <div class="sport-day">
+      <div class="sport-header"><span class="sport-tag tag-cardio">Cardio + movilidad</span><span class="sport-name">Miércoles — Cardio y core</span></div>
+      <div class="sport-list">Correr 20–30 min o saltar cuerda · Plancha 3x60s · Abdominales · Estiramiento general · Mantener ritmo, no destruirse</div>
+    </div>
+    <div class="sport-day">
+      <div class="sport-header"><span class="sport-tag tag-fuerza">Fuerza</span><span class="sport-name">Jueves — Pierna y glúteo</span></div>
+      <div class="sport-list">Sentadilla con peso o bodyweight · Zancadas · Puente de glúteo · Calf raises · Sentadilla búlgara · Alta intensidad</div>
+    </div>
+    <div class="sport-day">
+      <div class="sport-header"><span class="sport-tag tag-fuerza">Fuerza</span><span class="sport-name">Viernes — Hombro y core</span></div>
+      <div class="sport-list">Press militar · Elevaciones frontales y laterales · Remo al mentón · Plancha lateral · Abdominales oblicuos · Fuerza de cierre de semana</div>
+    </div>
+    <div class="sport-day">
+      <div class="sport-header"><span class="sport-tag tag-cardio">Cardio ligero</span><span class="sport-name">Sábado — Actividad ligera</span></div>
+      <div class="sport-list">Caminata activa · Movilidad y estiramiento · Nada de alta intensidad · Preparar el cuerpo para el descanso</div>
+    </div>
+    <div class="sport-day">
+      <div class="sport-header"><span class="sport-tag tag-descanso">Descanso</span><span class="sport-name">Domingo — Recuperación total</span></div>
+      <div class="sport-list">Sin entrenamiento estructurado · Caminata opcional si el cuerpo lo pide · Foco en sueño y recuperación · Misa y reflexión</div>
+    </div>
+  </div>
+
+  <div id="suplementos" class="section">
+    <div class="cat-label">Stack de suplementación</div>
+    <div class="supp-row">
+      <div class="supp-icon" style="background:#E1F5EE;color:#085041"><i class="ti ti-droplet" style="font-size:14px" aria-hidden="true"></i></div>
+      <div><div class="supp-name">Creatina monohidrato — 5g</div><div class="supp-timing">En el batido matutino + 5g en comida del mediodía · Total 10g/día</div></div>
+    </div>
+    <div class="supp-row">
+      <div class="supp-icon" style="background:#FAEEDA;color:#633806"><i class="ti ti-pill" style="font-size:14px" aria-hidden="true"></i></div>
+      <div><div class="supp-name">Vitamina Veroca</div><div class="supp-timing">Con el batido matutino — 7:50 am siempre</div></div>
+    </div>
+    <div class="supp-row">
+      <div class="supp-icon" style="background:#E6F1FB;color:#0C447C"><i class="ti ti-fish" style="font-size:14px" aria-hidden="true"></i></div>
+      <div><div class="supp-name">Omega 3 (DHA/EPA)</div><div class="supp-timing">Con el batido matutino o con la comida — 1–2 cápsulas</div></div>
+    </div>
+    <div class="supp-row">
+      <div class="supp-icon" style="background:#F1EFE8;color:#444441"><i class="ti ti-coffee" style="font-size:14px" aria-hidden="true"></i></div>
+      <div><div class="supp-name">Café — 1 taza (1 cda azúcar o alternante con té limón-jengibre)</div><div class="supp-timing">Solo en la mañana — jamás después de las 14:00</div></div>
+    </div>
+    <div class="supp-row">
+      <div class="supp-icon" style="background:#E1F5EE;color:#085041"><i class="ti ti-leaf" style="font-size:14px" aria-hidden="true"></i></div>
+      <div><div class="supp-name">Té de manzanilla / jamaica / jengibre</div><div class="supp-timing">Noche — alternativa al café. Baja cortisol y apoya el sueño</div></div>
+    </div>
+    <div style="margin-top:1rem;padding:10px 12px;border-radius:var(--border-radius-md);background:#FAEEDA;border:0.5px solid #EF9F27">
+      <div style="font-size:12px;font-weight:500;color:#633806;margin-bottom:3px">Futuro — cuando el presupuesto lo permita</div>
+      <div style="font-size:12px;color:#854F0B">Whey protein limpia (Olimpo Hydro Prime o Gold Standard) — sin sucralosa, sin maltodextrina. Reemplaza el cacao en el batido → 45g proteína post-entreno.</div>
+    </div>
+  </div>
+
+  <div id="despensa" class="section">
+    <div style="padding:8px 12px;border-radius:var(--border-radius-md);background:#E1F5EE;border:0.5px solid #1D9E75;margin-bottom:1rem;font-size:12px;color:#085041">
+      <i class="ti ti-calendar" style="font-size:12px;margin-right:4px" aria-hidden="true"></i>Lista de compras — viernes en tianguis + Walmart. Presupuesto: $750–800 MXN/semana
+    </div>
+
+    <div class="cat-label">Proteínas — tianguis</div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Pechuga de pollo</span><span class="shop-qty">1 kg<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Muslo de pollo</span><span class="shop-qty">½ kg<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Huevo campero (o regular)</span><span class="shop-qty">30 pzas<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Filete de pescado blanco</span><span class="shop-qty">½ kg<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Atún en agua</span><span class="shop-qty">3 latas<span class="shop-where walmart">walmart</span></span></div>
+
+    <div class="cat-label">Verduras y ensalada — tianguis</div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Espinacas frescas</span><span class="shop-qty">1 manojo<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Berros</span><span class="shop-qty">1 manojo<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Nopales</span><span class="shop-qty">½ kg<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Brócoli</span><span class="shop-qty">1 pieza<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Calabacita</span><span class="shop-qty">½ kg<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Jícama</span><span class="shop-qty">1 pza<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Pepino</span><span class="shop-qty">2 pzas<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Jitomate, cebolla, ajo</span><span class="shop-qty">surtido<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Limones</span><span class="shop-qty">1 kg<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Aguacate</span><span class="shop-qty">4–6 pzas<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Fresas o moras (temporada)</span><span class="shop-qty">250g<span class="shop-where">tianguis</span></span></div>
+
+    <div class="cat-label">Carbohidratos y base — tianguis/walmart</div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Avena entera (hojuela grande)</span><span class="shop-qty">500g<span class="shop-where walmart">walmart</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Plátano</span><span class="shop-qty">7 pzas<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Arroz integral</span><span class="shop-qty">½ kg<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Frijol negro de olla</span><span class="shop-qty">½ kg<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Tortilla de maíz artesanal</span><span class="shop-qty">½ kg<span class="shop-where">tianguis</span></span></div>
+
+    <div class="cat-label">Suplementos y extras</div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Creatina monohidrato</span><span class="shop-qty">verificar stock<span class="shop-where walmart">walmart</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Vitamina Veroca</span><span class="shop-qty">verificar stock<span class="shop-where walmart">walmart</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Omega 3 cápsulas</span><span class="shop-qty">verificar stock<span class="shop-where walmart">walmart</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Cacao puro sin azúcar</span><span class="shop-qty">200g<span class="shop-where walmart">walmart</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">AOVE (aceite de oliva extra virgen)</span><span class="shop-qty">botella chica<span class="shop-where walmart">walmart</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Café molido o soluble</span><span class="shop-qty">1 paq<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Té (manzanilla / jamaica / jengibre)</span><span class="shop-qty">mixto<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Sal de mar o rosa</span><span class="shop-qty">verificar<span class="shop-where">tianguis</span></span></div>
+    <div class="shop-item" onclick="toggleShop(this)"><div class="check-box"><i class="ti ti-check" style="font-size:10px"></i></div><span class="shop-name">Semillas de calabaza o nueces</span><span class="shop-qty">150g<span class="shop-where">tianguis</span></span></div>
+  </div>
+</div>
+
+<script>
+function switchTab(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  updateProgress();
+}
+function toggle(el){
+  el.classList.toggle('done');
+  updateProgress();
+}
+function toggleShop(el){
+  el.classList.toggle('got');
+}
+function updateProgress(){
+  if(!document.getElementById('habitos').classList.contains('active'))return;
+  const rows=document.querySelectorAll('#habitos .habit-row');
+  const done=document.querySelectorAll('#habitos .habit-row.done');
+  const total=rows.length;
+  const cnt=done.length;
+  document.getElementById('prog-text').textContent=cnt+' / '+total;
+  document.getElementById('prog-fill').style.width=Math.round(cnt/total*100)+'%';
+}
+updateProgress();
+</script>

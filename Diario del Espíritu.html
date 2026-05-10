@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual del Imperio · Alex Mike</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="modules.css">
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script src="caminos.js"></script>
+<script src="data-monje.js"></script>
+<script src="data-anclas.js"></script>
+<script src="data-sombras.js"></script>
+<script src="data-rituales.js"></script>
+<script src="data-vision.js"></script>
+<script src="data-rutina.js"></script>
+
+<script type="text/babel" src="app-core.jsx"></script>
+<script type="text/babel" src="app-views.jsx"></script>
+<script type="text/babel" src="app-flow.jsx"></script>
+<script type="text/babel" src="app-discern.jsx"></script>
+<script type="text/babel" src="app-modules.jsx"></script>
+<script type="text/babel" src="app-reprog.jsx"></script>
+<script type="text/babel" src="app-visual.jsx"></script>
+<script type="text/babel" src="app-habitos.jsx"></script>
+<script type="text/babel" src="app-daily.jsx"></script>
+
+<script type="text/babel">
+function App() {
+  const { state, setEntry, setModule, setHabitsConfig, setCamino } = window.useDiario();
+  const [view, setView] = React.useState('daily');
+  const camino = window.CAMINOS[state.currentCamino] || window.CAMINOS[0];
+
+  return (
+    <>
+      <window.Header view={view} setView={setView} camino={camino}/>
+      <main className="app-main">
+        {view === 'daily' && <window.DailyHub state={state} setEntry={setEntry} setModule={setModule} camino={camino}/>}
+        {view === 'reprog' && <window.ReprogView state={state} setModule={setModule}/>}
+        {view === 'visual' && <window.VisualView state={state} setModule={setModule}/>}
+        {view === 'habitos' && <window.HabitosView state={state} setModule={setModule} setHabitsConfig={setHabitsConfig}/>}
+        {view === 'caminos' && <window.CaminosView state={state} setCamino={setCamino}/>}
+        {view === 'calendario' && <window.CalendarioView state={state}/>}
+      </main>
+    </>
+  );
+}
+
+function waitForGlobals() {
+  if (window.HoyView && window.SemanaView && window.ResumenView && window.CaminosView && window._OldDiscernirView && window.DailyHub && window.ReprogView && window.VisualView && window.HabitosView && window.CalendarioView && window.ModoMonjeView) {
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App/>);
+  } else {
+    setTimeout(waitForGlobals, 50);
+  }
+}
+waitForGlobals();
+</script>
+
+</body>
+</html>
